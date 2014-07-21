@@ -1,6 +1,29 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-ICU4C_URL = 'https://s3.amazonaws.com/frederick-heroku-binaries/icu4c-52.1.0.tar.gz'
+BUILD_DIR=$1
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+echo --------------------------------------------------------------------------------
+
+cd $BUILD_DIR/vendor
+
+echo `pwd`
+
+ICU4C_URL=https://s3.amazonaws.com/frederick-heroku-binaries/icu4c-52.1.0.tar.gz
 echo 'Installing libicu-dev from s3' | indent
 curl $ICU4C_URL -s -o - | tar xzf -
+
+PATH=$PATH:$BUILD_DIR/vendor/icu4c-52.1.0/lib
+
+echo $PATH
+
+echo `ls`
+echo `ls icu4c-52.1.0/lib`
+
+cd $BUILD_DIR
+
+echo --------------------------------------------------------------------------------
